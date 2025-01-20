@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+ frontend:
+   build:
+     context: ./frontend
+     dockerfile: Dockerfile
+
+   environment:
+     - VUE_APP_API_URL=http://localhost:8000
+
+   command: ["npm", "run", "serve"]
+
+   ports:
+     - "8080:8080"
+   depends_on:
+     - backend
+
+   networks:
+     - app-network
+
+ backend:
+
+   build:
+     context: ./backend
+     dockerfile: Dockerfile
+
+   volumes:
+     - ./backend:/app
+
+   ports:
+     - "8000:8000"
+    
+   environment:
+     - DATABASE_URL=mongodb://mongo:27017/ai_assistant
+     - AWS_ACCESS_KEY_ID=rootieroot
+     - AWS_SECRET_ACCESS_KEY=passiepassie
+     - AWS_ENDPOINT_URL=http://minio:9000
+     - S3_BUCKET_NAME=test-bucket
+    
+   depends_on:
+     - mongo
+     - minio
+   networks:
+     - app-network
+
+ mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+    networks:
+      - app-network
+
+    depends_on:
+      - minio
+
+ minio:
+    image: docker.io/bitnami/minio:2024
+    platform: linux/amd64
+
+    ports:
+      - 9000:9000
+      - 9001:9001
+
+    environment:
+      MINIO_ROOT_PASSWORD: passiepassie
+      MINIO_ROOT_USER: rootieroot
+      MINIO_URL: http://minio:9000
+      MINIO_API_CORS_ALLOW_ORIGIN: "*"
+      MINIO_DEFAULT_BUCKETS: test-bucket,test-bucket-files
+
+    networks:
+      - app-network
+
+    logging:
+      driver: none
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongo-data:

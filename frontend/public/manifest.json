@@ -1,0 +1,35 @@
+{
+  "name": "Project Echo",
+  "short_name": "Echo",
+  "description": "An engaging audio content creation app.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4DBA87",
+  "orientation": "portrait",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/favicons/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicons/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicons/android-chrome-maskable-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/favicons/android-chrome-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ]
+}
