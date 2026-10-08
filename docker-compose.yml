@@ -58,7 +58,7 @@ services:
       - minio
 
  minio:
-    image: docker.io/bitnami/minio:2024
+    image: docker.io/soldevelo/minio:2024.12
     platform: linux/amd64
 
     ports:
